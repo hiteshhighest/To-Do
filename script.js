@@ -1,8 +1,13 @@
-todoList = [];
+let todoList = JSON.parse(localStorage.getItem('todo'));
+if (!todoList) {
+    todoList = [];
+}
+
+renderTodo();
 
 function addTodo() {
     if (document.getElementById('todo-name').value != '') {
-        newTodo = document.getElementById('todo-name').value;
+        let newTodo = document.getElementById('todo-name').value;
         document.getElementById('todo-name').value = '';
         todoList.push(newTodo);
     }
@@ -11,10 +16,10 @@ function addTodo() {
 }
 
 function renderTodo() {
-    FinalHtml = ''
+    let FinalHtml = ''
 
     todoList.forEach(function(todoName, index) {
-        TodoHTML = `
+        let TodoHTML = `
             <div class="list">
                 <p>${todoName}</p>
                 <button id="remove" onclick="removeTodo(${index})">Remove</button>
@@ -24,6 +29,7 @@ function renderTodo() {
         FinalHtml += TodoHTML;
     });
 
+    localStorage.setItem('todo', JSON.stringify(todoList));
     document.getElementById('todo').innerHTML = FinalHtml;
 }
 
